@@ -1,0 +1,25 @@
+index:
+    path: /
+    defaults: { _controller: AdminBundle:Default:index }
+    methods: [GET]
+
+login_get:
+    path: /login
+    defaults: { _controller: AdminBundle:Security:loginGet }
+    methods: [GET]
+
+login_post:
+    path: /login
+    defaults: { _controller: AdminBundle:Security:loginPost }
+    methods: [POST]
+
+logout:
+    path:     /logout
+    defaults: { _controller: AdminBundle:Security:logout }
+    methods: [GET]
+
+
+admin_default:
+    path: /admin
+    defaults: { _controller: AdminBundle:Default:default }
+    methods: [GET]

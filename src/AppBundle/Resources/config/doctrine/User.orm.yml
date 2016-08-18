@@ -1,0 +1,33 @@
+AppBundle\Entity\User:
+    type: entity
+    table: user
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type: string
+            length: 255
+            unique: true
+        password:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+            unique: true
+        role:
+            type: string
+            length: 255
+        createdDate:
+            type: integer
+        loginDate:
+            type: integer
+            nullable: true
+        active:
+            type: boolean
+    lifecycleCallbacks:
+        prePersist: [encryptPassword, setCreatedDateValue]
+        preUpdate: [encryptPassword]
