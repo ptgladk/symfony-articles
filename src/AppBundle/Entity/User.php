@@ -272,4 +272,63 @@ class User implements UserInterface
     public function eraseCredentials()
     {
     }
+
+    /**
+     * @var string
+     */
+    private $token;
+
+    /**
+     * @var integer
+     */
+    private $tokenDate;
+
+
+    /**
+     * Set token
+     *
+     * @param string $token
+     *
+     * @return User
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Set tokenDate
+     *
+     * @param integer $tokenDate
+     *
+     * @return User
+     */
+    public function setTokenDate($tokenDate)
+    {
+        $this->tokenDate = $tokenDate;
+
+        return $this;
+    }
+
+    /**
+     * Get tokenDate
+     *
+     * @return integer
+     */
+    public function getTokenDate()
+    {
+        return $this->tokenDate;
+    }
 }

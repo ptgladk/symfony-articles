@@ -1,0 +1,6 @@
+services:
+    app.json_response:
+        class: AppBundle\Util\JsonResponseUtil
+
+    app.token_generator:
+        class: AppBundle\Util\TokenGenerator

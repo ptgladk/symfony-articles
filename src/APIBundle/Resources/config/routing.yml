@@ -1,0 +1,9 @@
+api_auth:
+    path: /auth
+    defaults: { _controller: APIBundle:Auth:auth }
+    methods: [POST]
+
+api_article_get:
+    path: /api/article
+    defaults: { _controller: APIBundle:Article:get }
+    methods: [GET]

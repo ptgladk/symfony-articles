@@ -26,6 +26,13 @@ AppBundle\Entity\User:
         loginDate:
             type: integer
             nullable: true
+        token:
+            type: string
+            length: 255
+            nullable: true
+        tokenDate:
+            type: integer
+            nullable: true
         active:
             type: boolean
     lifecycleCallbacks:
