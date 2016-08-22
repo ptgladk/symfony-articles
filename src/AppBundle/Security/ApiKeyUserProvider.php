@@ -2,7 +2,6 @@
 
 namespace AppBundle\Security;
 
-use AppBundle\AppBundle;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;

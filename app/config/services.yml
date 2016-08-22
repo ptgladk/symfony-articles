@@ -6,7 +6,11 @@ services:
         class: AppBundle\Security\ApiKeyUserProvider
         arguments: ["@doctrine.orm.entity_manager"]
 
-    apikey_authenticator:
+    api_key_authenticator:
         class:  AppBundle\Security\ApiKeyAuthenticator
         public: false
+        arguments: ["@app.json_response", "@translator.default"]
+
+    api_key_access_denied:
+        class:  AppBundle\Security\ApiKeyAccessDenied
         arguments: ["@app.json_response", "@translator.default"]

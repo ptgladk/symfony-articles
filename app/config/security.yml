@@ -20,7 +20,8 @@ security:
             pattern: ^/api
             stateless: true
             simple_preauth:
-                authenticator: apikey_authenticator
+                authenticator: api_key_authenticator
+            access_denied_handler: api_key_access_denied
             provider: api_key_user_provider
 
         main:
