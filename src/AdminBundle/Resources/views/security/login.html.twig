@@ -5,12 +5,12 @@
         <p>{{ error }}</p>
     {% endif %}
     <form action="{{ path('login_post') }}" method="post">
-        <label for="username">Username:</label>
+        <label for="username">{{ 'admin.login_form.username'|trans }}:</label>
         <input type="text" id="username" name="username" value="{{ username }}" />
 
-        <label for="password">Password:</label>
+        <label for="password">{{ 'admin.login_form.password'|trans }}:</label>
         <input type="password" id="password" name="password" />
 
-        <button type="submit">login</button>
+        <button type="submit">{{ 'admin.login_form.button'|trans }}</button>
     </form>
 {% endblock %}

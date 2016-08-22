@@ -32,12 +32,14 @@ class SecurityController extends Controller
     {
         $username = $request->request->get('username');
         if (empty($username)) {
-            return $this->redirectToRoute('login_get', array('error' => 'Username is empty'));
+            return $this->redirectToRoute('login_get', array(
+                'error' => $this->get('translator')->trans('error.username_empty')
+            ));
         }
         $password = $request->request->get('password');
         if (empty($password)) {
             return $this->redirectToRoute('login_get', array(
-                'error' => 'Password is empty',
+                'error' => $this->get('translator')->trans('error.password_empty'),
                 'username' => $username
             ));
         }
@@ -49,7 +51,7 @@ class SecurityController extends Controller
 
         if (!$user || !password_verify($password, $user->getPassword())) {
             return $this->redirectToRoute('login_get', array(
-                'error' => 'Username or password is incorrect',
+                'error' => $this->get('translator')->trans('error.credentials_incorrect'),
                 'username' => $username
             ));
         }

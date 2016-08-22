@@ -25,8 +25,10 @@ class AdminCreateCommand extends ContainerAwareCommand
             'username' => 'admin'
         ));
 
-        $message = '<info>Admin was created (username: ' . $defaultAdminParams['username'] .
-            ' / password: ' . $defaultAdminParams['password'] . ')</info>';
+        $message = '<info>' . $this->getContainer()->get('translator')->trans('command.admin_created', array(
+                '%username%' => $defaultAdminParams['username'],
+                '%password%' => $defaultAdminParams['password']
+            )) . '</info>';
 
         if (!$admin) {
             $this->createAdmin($defaultAdminParams);
@@ -34,7 +36,7 @@ class AdminCreateCommand extends ContainerAwareCommand
         } else {
             $question = $this->getHelperSet()->get('question');
             $confirmation = new ConfirmationQuestion(
-                '<question>Admin already exist. Do you want to rewrite admin data y/N ?</question>',
+                '<question>' . $this->getContainer()->get('translator')->trans('command.admin_exist') . '</question>',
                 false
             );
             if ($question->ask($input, $output, $confirmation)) {

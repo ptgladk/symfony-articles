@@ -1,0 +1,16 @@
+command:
+    admin_created: "Admin was created (username: %username% / password: %password%)"
+    admin_exist: Admin already exist. Do you want to rewrite admin data y/N ?
+error:
+    username_empty: Username is empty
+    password_empty: Password is empty
+    credentials_incorrect: Username or password is incorrect
+    unauthorized: Unauthorized
+admin:
+    title: Admin
+    login_form:
+        username: Username
+        password: Password
+        button: login
+    logout: Logout
+    hello_message: Hello World!

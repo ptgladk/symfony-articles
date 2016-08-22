@@ -3,6 +3,7 @@
 namespace AppBundle\Security;
 
 use AppBundle\Util\JsonResponseUtil;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
@@ -15,13 +16,16 @@ use Symfony\Component\Security\Http\Authentication\SimplePreAuthenticatorInterfa
 class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface, AuthenticationFailureHandlerInterface
 {
     protected $response;
+    protected $translator;
 
     /**
      * @param JsonResponseUtil $jsonResponse
+     * @param Translator $trans
      */
-    public function __construct(JsonResponseUtil $jsonResponse)
+    public function __construct(JsonResponseUtil $jsonResponse, Translator $trans)
     {
         $this->response = $jsonResponse;
+        $this->translator = $trans;
     }
 
     /**
@@ -86,6 +90,9 @@ class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface, Authentica
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        return $this->response->error('Unauthorized', Response::HTTP_UNAUTHORIZED);
+        return $this->response->error(
+            $this->translator->trans('error.unauthorized'),
+            Response::HTTP_UNAUTHORIZED
+        );
     }
 }

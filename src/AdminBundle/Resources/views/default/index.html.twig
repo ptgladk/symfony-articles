@@ -1,6 +1,6 @@
 {% extends '@Admin/layout/layout.html.twig' %}
 
 {% block content %}
-    <p>Hello World!</p>
-    <a href="{{ path('logout') }}">Logout</a>
+    <p>{{ 'admin.hello_message'|trans }}</p>
+    <a href="{{ path('logout') }}">{{ 'admin.logout'|trans }}</a>
 {% endblock %}

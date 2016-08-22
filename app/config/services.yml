@@ -9,4 +9,4 @@ services:
     apikey_authenticator:
         class:  AppBundle\Security\ApiKeyAuthenticator
         public: false
-        arguments: ["@app.json_response"]
+        arguments: ["@app.json_response", "@translator.default"]

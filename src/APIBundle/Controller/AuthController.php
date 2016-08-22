@@ -15,11 +15,11 @@ class AuthController extends Controller
     {
         $username = $request->request->get('username');
         if (empty($username)) {
-            return $this->get('app.json_response')->error('Username is empty');
+            return $this->get('app.json_response')->error($this->get('translator')->trans('error.username_empty'));
         }
         $password = $request->request->get('password');
         if (empty($password)) {
-            return $this->get('app.json_response')->error('Password is empty');
+            return $this->get('app.json_response')->error($this->get('translator')->trans('error.password_empty'));
         }
 
         $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array(
@@ -28,7 +28,9 @@ class AuthController extends Controller
         ));
 
         if (!$user || !password_verify($password, $user->getPassword())) {
-            return $this->get('app.json_response')->error('Username or password is incorrect');
+            return $this->get('app.json_response')->error(
+                $this->get('translator')->trans('error.credentials_incorrect')
+            );
         }
 
         $token = $this->get('app.token_generator')->generate();
