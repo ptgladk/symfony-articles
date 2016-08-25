@@ -4,3 +4,8 @@ services:
 
     app.token_generator:
         class: AppBundle\Util\TokenGenerator
+
+    normalizer.article:
+        class: AppBundle\Serializer\Normalizer\ArticleNormalizer
+        tags:
+            - { name: serializer.normalizer }

@@ -7,6 +7,7 @@ error:
     credentials_incorrect: Username or password is incorrect
     unauthorized: Unauthorized
     forbidden: Access denied
+    not_found: Not found
 admin:
     title: Admin
     login_form:

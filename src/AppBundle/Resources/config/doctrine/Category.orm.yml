@@ -1,0 +1,25 @@
+AppBundle\Entity\Category:
+    type: entity
+    table: category
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        createdDate:
+            type: integer
+        updatedDate:
+            type: integer
+            nullable: true
+        active:
+            type: boolean
+    manyToMany:
+        artiles:
+            targetEntity: AppBundle\Entity\Article
+            mappedBy: categories
+    lifecycleCallbacks:
+        prePersist: [setCreatedDateValue]

@@ -24,6 +24,11 @@ class ApiKeyAccessDenied implements AccessDeniedHandlerInterface
         $this->translator = $trans;
     }
 
+    /**
+     * @param Request $request
+     * @param AccessDeniedException $accessDeniedException
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function handle(Request $request, AccessDeniedException $accessDeniedException)
     {
         return $this->response->error(

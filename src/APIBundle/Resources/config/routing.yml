@@ -3,7 +3,20 @@ api_auth:
     defaults: { _controller: APIBundle:Auth:auth }
     methods: [POST]
 
-api_article_get:
+# Article
+api_article_all_get:
     path: /api/article
+    defaults: { _controller: APIBundle:Article:all }
+    methods: [GET]
+
+api_article_get:
+    path: /api/article/{id}
     defaults: { _controller: APIBundle:Article:get }
     methods: [GET]
+    requirements:
+        id: \d+
+
+api_article_post:
+    path: /api/article
+    defaults: { _controller: APIBundle:Article:post }
+    methods: [POST]

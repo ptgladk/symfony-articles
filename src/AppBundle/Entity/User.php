@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_USER = 'ROLE_USER';
 
     /**
      * @var integer
@@ -55,6 +56,15 @@ class User implements UserInterface
      * @var boolean
      */
     private $isPasswordChanged = false;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -238,8 +248,7 @@ class User implements UserInterface
     }
 
     /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
+     * PrePersist, PreUpdate
      */
     public function encryptPassword()
     {
@@ -249,12 +258,11 @@ class User implements UserInterface
     }
 
     /**
-     * @ORM\PrePersist
+     * PrePersist
      */
     public function setCreatedDateValue()
     {
-        if (!$this->getCreatedDate())
-        {
+        if (!$this->getCreatedDate()) {
             $this->createdDate = time();
         }
     }
@@ -330,5 +338,83 @@ class User implements UserInterface
     public function getTokenDate()
     {
         return $this->tokenDate;
+    }
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $articles;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $comments;
+
+    /**
+     * Add article
+     *
+     * @param \AppBundle\Entity\Article $article
+     *
+     * @return User
+     */
+    public function addArticle(\AppBundle\Entity\Article $article)
+    {
+        $this->articles[] = $article;
+
+        return $this;
+    }
+
+    /**
+     * Remove article
+     *
+     * @param \AppBundle\Entity\Article $article
+     */
+    public function removeArticle(\AppBundle\Entity\Article $article)
+    {
+        $this->articles->removeElement($article);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     *
+     * @return User
+     */
+    public function addComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     */
+    public function removeComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

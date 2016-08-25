@@ -35,6 +35,13 @@ AppBundle\Entity\User:
             nullable: true
         active:
             type: boolean
+    oneToMany:
+        articles:
+            targetEntity: AppBundle\Entity\Article
+            mappedBy: user
+        comments:
+            targetEntity: AppBundle\Entity\Comment
+            mappedBy: user
     lifecycleCallbacks:
         prePersist: [encryptPassword, setCreatedDateValue]
         preUpdate: [encryptPassword]

@@ -1,0 +1,50 @@
+AppBundle\Entity\Article:
+    type: entity
+    table: article
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        description:
+            type: string
+            length: 255
+        content:
+            type: text
+        createdDate:
+            type: integer
+        updatedDate:
+            type: integer
+            nullable: true
+        active:
+            type: boolean
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: articles
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: false
+    oneToMany:
+        comments:
+            targetEntity: AppBundle\Entity\Comment
+            mappedBy: article
+    manyToMany:
+        categories:
+            targetEntity: AppBundle\Entity\Category
+            joinTable:
+                name: article_category
+                joinColumns:
+                    article_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    category_id:
+                        referencedColumnName: id
+    lifecycleCallbacks:
+        prePersist: [setCreatedDateValue]
+        preUpdate: [setUpdatedDateValue]

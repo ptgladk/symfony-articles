@@ -1,0 +1,37 @@
+AppBundle\Entity\Comment:
+    type: entity
+    table: comment
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        text:
+            type: string
+            length: 255
+        createdDate:
+            type: integer
+        updatedDate:
+            type: integer
+            nullable: true
+        active:
+            type: boolean
+    manyToOne:
+        article:
+            targetEntity: AppBundle\Entity\Article
+            inversedBy: comments
+            joinColumn:
+                name: article_id
+                referencedColumnName: id
+                nullable: false
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: comments
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: false
+    lifecycleCallbacks:
+        prePersist: [setCreatedDateValue]
+        preUpdate: [setUpdatedDateValue]

@@ -1,0 +1,12 @@
+AppBundle\Entity\Article:
+    properties:
+        title:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        description:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        content:
+            - NotBlank: ~
