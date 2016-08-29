@@ -20,3 +20,17 @@ api_article_post:
     path: /api/article
     defaults: { _controller: APIBundle:Article:post }
     methods: [POST]
+
+api_article_put:
+    path: /api/article/{id}
+    defaults: { _controller: APIBundle:Article:put }
+    methods: [PUT]
+    requirements:
+        id: \d+
+
+api_article_delete:
+    path: /api/article/{id}
+    defaults: { _controller: APIBundle:Article:delete }
+    methods: [DELETE]
+    requirements:
+        id: \d+

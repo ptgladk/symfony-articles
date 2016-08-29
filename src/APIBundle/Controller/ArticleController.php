@@ -65,4 +65,67 @@ class ArticleController extends Controller
 
         return $this->get('app.json_response')->errorForm($form);
     }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function putAction(Request $request)
+    {
+        $id = $request->get('id');
+        if (!($article = $this->getDoctrine()->getRepository('AppBundle:Article')->find($id))) {
+            return $this->get('app.json_response')->error(
+                $this->get('translator')->trans('error.not_found'),
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        if ($article->getUser() != $this->getUser()) {
+            return $this->get('app.json_response')->error(
+                $this->get('translator')->trans('error.permission_denied'),
+                Response::HTTP_FORBIDDEN
+            );
+        }
+
+        $form = $this->createForm(ArticleType::class, $article, array('csrf_protection' => false));
+        $form->submit($request->query->all());
+        if ($form->isValid()) {
+            $article = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+
+            return $this->get('app.json_response')->success();
+        }
+
+        return $this->get('app.json_response')->errorForm($form);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function deleteAction(Request $request)
+    {
+        $id = $request->get('id');
+        if (!($article = $this->getDoctrine()->getRepository('AppBundle:Article')->find($id))) {
+            return $this->get('app.json_response')->error(
+                $this->get('translator')->trans('error.not_found'),
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        if ($article->getUser() != $this->getUser()) {
+            return $this->get('app.json_response')->error(
+                $this->get('translator')->trans('error.permission_denied'),
+                Response::HTTP_FORBIDDEN
+            );
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($article);
+        $em->flush();
+        return $this->get('app.json_response')->success();
+    }
 }

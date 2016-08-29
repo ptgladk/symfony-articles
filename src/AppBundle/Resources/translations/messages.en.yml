@@ -8,6 +8,7 @@ error:
     unauthorized: Unauthorized
     forbidden: Access denied
     not_found: Not found
+    permission_denied: You do not have necessary permissions
 admin:
     title: Admin
     login_form:
