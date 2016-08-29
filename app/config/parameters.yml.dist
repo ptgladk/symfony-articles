@@ -23,3 +23,8 @@ parameters:
         username: admin
         password: 123
         email: admin@test.com
+
+    # API headers
+    api_headers:
+        - { header: Access-Control-Allow-Origin, value: http://localhost:8080 }
+        - { header: Access-Control-Allow-Methods, value: "GET, POST, PUT, DELETE" }

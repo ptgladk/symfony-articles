@@ -2,12 +2,23 @@
 
 namespace AppBundle\Util;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class JsonResponseUtil
 {
+    protected $container;
+
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * Success response
      *
@@ -18,7 +29,8 @@ class JsonResponseUtil
     public function success(array $data = array(), $status = Response::HTTP_OK)
     {
         $data['status'] = 'success';
-        return new JsonResponse($data, $status);
+        $headers = $this->_getHeaders();
+        return new JsonResponse($data, $status, $headers);
     }
 
     /**
@@ -30,7 +42,8 @@ class JsonResponseUtil
      */
     public function error($message, $status = Response::HTTP_BAD_REQUEST)
     {
-        return new JsonResponse(array('message' => $message, 'status' => 'error'), $status);
+        $headers = $this->_getHeaders();
+        return new JsonResponse(array('message' => $message, 'status' => 'error'), $status, $headers);
     }
 
     /**
@@ -48,6 +61,28 @@ class JsonResponseUtil
             }
         }
 
-        return new JsonResponse(array('errors' => $errors, 'status' => 'error'), $status);
+        $headers = $this->_getHeaders();
+        return new JsonResponse(array('errors' => $errors, 'status' => 'error'), $status, $headers);
+    }
+
+    /**
+     * Get headers for api if they exist
+     *
+     * @return array
+     */
+    private function _getHeaders()
+    {
+        $headers = array();
+        try {
+            $headersConfig = $this->container->getParameter('api_headers');
+        } catch(\Exception $e) {
+            return $headers;
+        }
+
+        foreach ($headersConfig as $headerConfig) {
+            $headers[$headerConfig['header']] = $headerConfig['value'];
+        }
+
+        return $headers;
     }
 }
