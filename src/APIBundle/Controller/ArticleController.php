@@ -10,16 +10,18 @@ use Symfony\Component\HttpFoundation\Response;
 class ArticleController extends Controller
 {
     /**
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function allAction()
+    public function allAction(Request $request)
     {
+        if ($username = $request->get('username')) {
+            $articles = $this->getDoctrine()->getRepository('AppBundle:Article')->getByUsername($username);
+        } else {
+            $articles = $this->getDoctrine()->getRepository('AppBundle:Article')->findAll();
+        }
         return $this->get('app.json_response')->success(
-            array(
-                'data' => $this->get('serializer')->normalize(
-                    $this->getDoctrine()->getRepository('AppBundle:Article')->findAll()
-                )
-            )
+            array('data' => $this->get('serializer')->normalize($articles))
         );
     }
 
@@ -51,7 +53,17 @@ class ArticleController extends Controller
     public function postAction(Request $request)
     {
         $form = $this->createForm(ArticleType::class, null, array('csrf_protection' => false));
-        $form->submit($request->request->all());
+        if ($request->headers->get('content-type') == 'application/json') {
+            $jsonData = json_decode($request->getContent(), true);
+            $requestData = array(
+                'title' => empty($jsonData['title']) ? '' : $jsonData['title'],
+                'description' => empty($jsonData['description']) ? '' : $jsonData['description'],
+                'content' => empty($jsonData['content']) ? '' : $jsonData['content']
+            );
+        } else {
+            $requestData = $request->request->all();
+        }
+        $form->submit($requestData);
         if ($form->isValid()) {
             $article = $form->getData();
             $article->setUser($this->getUser());
@@ -88,7 +100,17 @@ class ArticleController extends Controller
         }
 
         $form = $this->createForm(ArticleType::class, $article, array('csrf_protection' => false));
-        $form->submit($request->query->all());
+        if ($request->headers->get('content-type') == 'application/json') {
+            $jsonData = json_decode($request->getContent(), true);
+            $requestData = array(
+                'title' => empty($jsonData['title']) ? '' : $jsonData['title'],
+                'description' => empty($jsonData['description']) ? '' : $jsonData['description'],
+                'content' => empty($jsonData['content']) ? '' : $jsonData['content']
+            );
+        } else {
+            $requestData = $request->query->all();
+        }
+        $form->submit($requestData);
         if ($form->isValid()) {
             $article = $form->getData();
 
@@ -126,6 +148,14 @@ class ArticleController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($article);
         $em->flush();
+        return $this->get('app.json_response')->success();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function optionsAction()
+    {
         return $this->get('app.json_response')->success();
     }
 }

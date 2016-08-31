@@ -28,3 +28,4 @@ parameters:
     api_headers:
         - { header: Access-Control-Allow-Origin, value: http://localhost:8080 }
         - { header: Access-Control-Allow-Methods, value: "GET, POST, PUT, DELETE" }
+        - { header: Access-Control-Allow-Headers, value: "Authorization, Content-Type" }

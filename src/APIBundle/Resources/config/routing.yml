@@ -34,3 +34,15 @@ api_article_delete:
     methods: [DELETE]
     requirements:
         id: \d+
+
+api_article_options:
+    path: /api/article
+    defaults: { _controller: APIBundle:Article:options }
+    methods: [OPTIONS]
+
+api_article_options_id:
+    path: /api/article/{id}
+    defaults: { _controller: APIBundle:Article:options }
+    methods: [OPTIONS]
+    requirements:
+        id: \d+
