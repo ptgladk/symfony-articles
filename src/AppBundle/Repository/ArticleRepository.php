@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Article;
+
 /**
  * ArticleRepository
  *
@@ -10,6 +12,10 @@ namespace AppBundle\Repository;
  */
 class ArticleRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $username
+     * @return array
+     */
     public function getByUsername($username)
     {
         $query = $this->createQueryBuilder('a')
@@ -19,5 +25,21 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('username', $username);
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @param Article $article
+     * @return mixed
+     */
+    public function getFavoriteCount(Article $article)
+    {
+        $queryBuilder = $this->createQueryBuilder('a');
+        $query = $queryBuilder
+            ->select($queryBuilder->expr()->count('a'))
+            ->innerJoin('a.favorites', 'f')
+            ->where('a = :article')
+            ->setParameter('article', $article);
+
+        return $query->getQuery()->getSingleScalarResult();
     }
 }

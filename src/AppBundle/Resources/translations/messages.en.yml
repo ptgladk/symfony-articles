@@ -9,6 +9,9 @@ error:
     forbidden: Access denied
     not_found: Not found
     permission_denied: You do not have necessary permissions
+    article:
+        already_favorite: Article already was added in favorites
+        not_favorite: Article is not in favorites
 admin:
     title: Admin
     login_form:

@@ -1,0 +1,28 @@
+AppBundle\Entity\Favorite:
+    type: entity
+    table: favorite
+    id:
+        user:
+            associationKey: true
+        article:
+            associationKey: true
+    fields:
+        createdDate:
+            type: integer
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: favorites
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: false
+        article:
+            targetEntity: AppBundle\Entity\Article
+            inversedBy: favorites
+            joinColumn:
+                name: article_id
+                referencedColumnName: id
+                nullable: false
+    lifecycleCallbacks:
+        prePersist: [setCreatedDateValue]

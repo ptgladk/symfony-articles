@@ -2,6 +2,7 @@
 
 namespace APIBundle\Controller;
 
+use AppBundle\Entity\Favorite;
 use AppBundle\Form\ArticleType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -148,6 +149,71 @@ class ArticleController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($article);
         $em->flush();
+        return $this->get('app.json_response')->success();
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function postFavoriteAction(Request $request)
+    {
+        $id = $request->get('id');
+        if (!($article = $this->getDoctrine()->getRepository('AppBundle:Article')->find($id))) {
+            return $this->get('app.json_response')->error(
+                $this->get('translator')->trans('error.not_found'),
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        $user = $this->getUser();
+        if ($this->getDoctrine()->getRepository('AppBundle:Favorite')->findOneBy(array(
+            'article' => $article,
+            'user' => $user
+        ))) {
+            return $this->get('app.json_response')->error(
+                $this->get('translator')->trans('error.article.already_favorite')
+            );
+        }
+
+        $favorite = new Favorite();
+        $favorite->setUser($user);
+        $article->addFavorite($favorite);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($article);
+        $em->flush();
+
+        return $this->get('app.json_response')->success();
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function deleteFavoriteAction(Request $request)
+    {
+        $id = $request->get('id');
+        if (!($article = $this->getDoctrine()->getRepository('AppBundle:Article')->find($id))) {
+            return $this->get('app.json_response')->error(
+                $this->get('translator')->trans('error.not_found'),
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        if (!($favorite = $this->getDoctrine()->getRepository('AppBundle:Favorite')->findOneBy(array(
+            'article' => $article,
+            'user' => $this->getUser()
+        )))) {
+            return $this->get('app.json_response')->error(
+                $this->get('translator')->trans('error.article.not_favorite')
+            );
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($favorite);
+        $em->flush();
+
         return $this->get('app.json_response')->success();
     }
 

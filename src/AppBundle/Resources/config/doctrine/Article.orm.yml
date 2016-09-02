@@ -35,6 +35,10 @@ AppBundle\Entity\Article:
         comments:
             targetEntity: AppBundle\Entity\Comment
             mappedBy: article
+        favorites:
+            targetEntity: AppBundle\Entity\Favorite
+            mappedBy: article
+            cascade: ["persist", "remove"]
     manyToMany:
         categories:
             targetEntity: AppBundle\Entity\Category

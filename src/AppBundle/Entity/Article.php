@@ -58,12 +58,28 @@ class Article
     private $categories;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $favorites;
+
+    /**
+     * @var integer
+     */
+    private $countInFavorites = 0;
+
+    /**
+     * @var boolean
+     */
+    private $isFavorite = false;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->favorites = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -328,5 +344,88 @@ class Article
     public function setUpdatedDateValue()
     {
         $this->updatedDate = time();
+    }
+
+    /**
+     * Add favorite
+     *
+     * @param \AppBundle\Entity\Favorite $favorite
+     *
+     * @return Article
+     */
+    public function addFavorite(\AppBundle\Entity\Favorite $favorite)
+    {
+        $this->favorites[] = $favorite;
+        $favorite->setArticle($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove favorite
+     *
+     * @param \AppBundle\Entity\Favorite $favorite
+     */
+    public function removeFavorite(\AppBundle\Entity\Favorite $favorite)
+    {
+        $this->favorites->removeElement($favorite);
+    }
+
+    /**
+     * Get favorites
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFavorites()
+    {
+        return $this->favorites;
+    }
+
+    /**
+     * Set countInFavorites
+     *
+     * @param integer $countInFavorites
+     *
+     * @return Article
+     */
+    public function setCountInFavorites($countInFavorites)
+    {
+        $this->countInFavorites = $countInFavorites;
+
+        return $this;
+    }
+
+    /**
+     * Get countInFavorites
+     *
+     * @return integer
+     */
+    public function getCountInFavorites()
+    {
+        return $this->countInFavorites;
+    }
+
+    /**
+     * Set isFavorite
+     *
+     * @param boolean $isFavorite
+     *
+     * @return Article
+     */
+    public function setIsFavorite($isFavorite)
+    {
+        $this->isFavorite = $isFavorite;
+
+        return $this;
+    }
+
+    /**
+     * Get isFavorite
+     *
+     * @return boolean
+     */
+    public function getIsFavorite()
+    {
+        return $this->isFavorite;
     }
 }

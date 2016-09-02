@@ -22,6 +22,8 @@ class ArticleNormalizer implements NormalizerInterface
             'title' => $object->getTitle(),
             'description' => $object->getDescription(),
             'content' => $object->getContent(),
+            'countInFavorites' => $object->getCountInFavorites(),
+            'isFavorite' => $object->getIsFavorite(),
             'user' => array(
                 'id' => $user->getId(),
                 'username' => $user->getUsername()

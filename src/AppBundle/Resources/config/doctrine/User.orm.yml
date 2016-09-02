@@ -42,6 +42,9 @@ AppBundle\Entity\User:
         comments:
             targetEntity: AppBundle\Entity\Comment
             mappedBy: user
+        favorites:
+            targetEntity: AppBundle\Entity\Favorite
+            mappedBy: user
     lifecycleCallbacks:
         prePersist: [encryptPassword, setCreatedDateValue]
         preUpdate: [encryptPassword]

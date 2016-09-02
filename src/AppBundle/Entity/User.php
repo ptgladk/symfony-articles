@@ -58,12 +58,18 @@ class User implements UserInterface
     private $isPasswordChanged = false;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $favorites;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->favorites = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -416,5 +422,39 @@ class User implements UserInterface
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Add favorite
+     *
+     * @param \AppBundle\Entity\Favorite $favorite
+     *
+     * @return User
+     */
+    public function addFavorite(\AppBundle\Entity\Favorite $favorite)
+    {
+        $this->favorites[] = $favorite;
+
+        return $this;
+    }
+
+    /**
+     * Remove favorite
+     *
+     * @param \AppBundle\Entity\Favorite $favorite
+     */
+    public function removeFavorite(\AppBundle\Entity\Favorite $favorite)
+    {
+        $this->favorites->removeElement($favorite);
+    }
+
+    /**
+     * Get favorites
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFavorites()
+    {
+        return $this->favorites;
     }
 }

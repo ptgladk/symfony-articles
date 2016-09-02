@@ -6,7 +6,13 @@ services:
     app.token_generator:
         class: AppBundle\Util\TokenGenerator
 
-    normalizer.article:
+    app.article_normalizer:
         class: AppBundle\Serializer\Normalizer\ArticleNormalizer
         tags:
             - { name: serializer.normalizer }
+
+    app.article_listener:
+        class: AppBundle\Listener\ArticleListener
+        arguments: ["@service_container"]
+        tags:
+            - { name: doctrine.event_listener, event: postLoad, method: onPostLoad, connection: default }

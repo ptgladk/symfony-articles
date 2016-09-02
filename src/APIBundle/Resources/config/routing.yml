@@ -35,6 +35,20 @@ api_article_delete:
     requirements:
         id: \d+
 
+api_article_favorite_post:
+    path: /api/article/favorite/{id}
+    defaults: { _controller: APIBundle:Article:postFavorite }
+    methods: [POST]
+    requirements:
+        id: \d+
+
+api_article_favorite_delete:
+    path: /api/article/favorite/{id}
+    defaults: { _controller: APIBundle:Article:deleteFavorite }
+    methods: [DELETE]
+    requirements:
+        id: \d+
+
 api_article_options:
     path: /api/article
     defaults: { _controller: APIBundle:Article:options }
@@ -42,6 +56,13 @@ api_article_options:
 
 api_article_options_id:
     path: /api/article/{id}
+    defaults: { _controller: APIBundle:Article:options }
+    methods: [OPTIONS]
+    requirements:
+        id: \d+
+
+api_article_favorite_options_id:
+    path: /api/article/favorite/{id}
     defaults: { _controller: APIBundle:Article:options }
     methods: [OPTIONS]
     requirements:
