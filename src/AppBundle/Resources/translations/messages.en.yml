@@ -20,3 +20,4 @@ admin:
         button: login
     logout: Logout
     hello_message: Hello World!
+    api_doc: API documentation

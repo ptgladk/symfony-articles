@@ -2,5 +2,6 @@
 
 {% block content %}
     <p>{{ 'admin.hello_message'|trans }}</p>
-    <a href="{{ path('logout') }}">{{ 'admin.logout'|trans }}</a>
+    <p><a href="{{ path('nelmio_api_doc_index') }}">{{ 'admin.api_doc'|trans }}</a></p>
+    <p><a href="{{ path('logout') }}">{{ 'admin.logout'|trans }}</a></p>
 {% endblock %}

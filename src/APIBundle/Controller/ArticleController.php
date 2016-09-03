@@ -7,10 +7,19 @@ use AppBundle\Form\ArticleType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class ArticleController extends Controller
 {
     /**
+     * @ApiDoc(
+     *     section="Article",
+     *     description="Get all articles",
+     *     parameters={
+     *          {"name"="username", "dataType"="string", "required"=false, "description"="Username"}
+     *     }
+     * )
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -27,6 +36,11 @@ class ArticleController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *     section="Article",
+     *     description="Get an article"
+     * )
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -48,6 +62,19 @@ class ArticleController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *     section="Article",
+     *     description="Create an article",
+     *     headers={
+     *          {"name"="Authorization", "description"="Authorization token", "required"=true}
+     *     },
+     *     parameters={
+     *          {"name"="title", "dataType"="string", "required"=true, "description"="Title"},
+     *          {"name"="description", "dataType"="string", "required"=true, "description"="Description"},
+     *          {"name"="content", "dataType"="string", "required"=true, "description"="Content"}
+     *     }
+     * )
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -80,6 +107,19 @@ class ArticleController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *     section="Article",
+     *     description="Update an article",
+     *     headers={
+     *          {"name"="Authorization", "description"="Authorization token", "required"=true}
+     *     },
+     *     parameters={
+     *          {"name"="title", "dataType"="string", "required"=true, "description"="Title"},
+     *          {"name"="description", "dataType"="string", "required"=true, "description"="Description"},
+     *          {"name"="content", "dataType"="string", "required"=true, "description"="Content"}
+     *     }
+     * )
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -126,6 +166,14 @@ class ArticleController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *     section="Article",
+     *     description="Delete an article",
+     *     headers={
+     *          {"name"="Authorization", "description"="Authorization token", "required"=true}
+     *     }
+     * )
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -153,6 +201,14 @@ class ArticleController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *     section="Article",
+     *     description="Add an article in favorites",
+     *     headers={
+     *          {"name"="Authorization", "description"="Authorization token", "required"=true}
+     *     }
+     * )
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -188,6 +244,14 @@ class ArticleController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *     section="Article",
+     *     description="Delete an article from favorites",
+     *     headers={
+     *          {"name"="Authorization", "description"="Authorization token", "required"=true}
+     *     }
+     * )
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */

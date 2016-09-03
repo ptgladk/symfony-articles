@@ -4,10 +4,20 @@ namespace APIBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class AuthController extends Controller
 {
     /**
+     * @ApiDoc(
+     *     section="Auth",
+     *     description="User authorization",
+     *     parameters={
+     *          {"name"="username", "dataType"="string", "required"=true, "description"="Username"},
+     *          {"name"="password", "dataType"="string", "required"=true, "description"="Password"}
+     *     }
+     * )
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */

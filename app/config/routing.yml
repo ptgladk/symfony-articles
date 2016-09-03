@@ -5,3 +5,7 @@ api:
 admin:
     resource: "@AdminBundle/Resources/config/routing.yml"
     prefix:   /
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /admin/api/doc
