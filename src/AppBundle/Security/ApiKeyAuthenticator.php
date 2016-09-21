@@ -65,6 +65,10 @@ class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface, Authentica
         }
 
         $apiKey = $token->getCredentials();
+        if (!$apiKey) {
+            return null;
+        }
+
         $username = $userProvider->getUsernameForApiKey($apiKey);
         if (!$username) {
             return null;
