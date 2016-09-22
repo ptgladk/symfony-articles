@@ -16,3 +16,4 @@
 /web/bundles/
 /.idea
 /src/AppBundle/Entity/*.php~
+/app/config/parameters_test.yml

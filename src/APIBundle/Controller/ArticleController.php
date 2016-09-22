@@ -149,7 +149,7 @@ class ArticleController extends Controller
                 'content' => empty($jsonData['content']) ? '' : $jsonData['content']
             );
         } else {
-            $requestData = $request->query->all();
+            $requestData = $request->request->all();
         }
         $form->submit($requestData);
         if ($form->isValid()) {
