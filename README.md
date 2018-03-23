@@ -1,15 +1,12 @@
 Simple symfony API project
 ==========================
 
-To run project:
+Deploy:
 ```sh
-composer install
-php bin/console doctrine:database:create
-php bin/console doctrine:schema:update --force
-php bin/console server:run
+sh deploy.sh
 ```
 
-To create first admin user:
+Deploy with docker:
 ```sh
-php bin/console admin:create
+sh deploy.sh docker
 ```

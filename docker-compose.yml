@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+    mysql:
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - '3307:3306'
+        volumes:
+            - db:/var/lib/mysql
+        networks:
+            - articles_network
+
+    app:
+        build: ./docker
+        ports:
+            - '81:80'
+        volumes:
+            - ./:/var/www/html
+            - ./docker/apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
+        working_dir: /var/www/html
+        networks:
+            - articles_network
+        depends_on:
+            - mysql
+
+networks:
+    articles_network:
+        driver: 'bridge'
+
+volumes:
+    db:
+        driver: 'local'
