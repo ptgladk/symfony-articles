@@ -4,6 +4,7 @@ if [ $1 = 'docker' ];
 then
     docker-compose build
     docker-compose up -d
+    docker-compose exec app chmod 777 -R var
     docker-compose exec app composer install
     docker-compose exec app php bin/console doctrine:database:create --if-not-exists --no-interaction
     docker-compose exec app php bin/console doctrine:schema:update --force
